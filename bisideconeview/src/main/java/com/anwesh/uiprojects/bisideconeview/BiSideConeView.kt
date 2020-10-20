@@ -234,4 +234,13 @@ class BiSideConeView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : BiSideConeView {
+            val view : BiSideConeView = BiSideConeView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
