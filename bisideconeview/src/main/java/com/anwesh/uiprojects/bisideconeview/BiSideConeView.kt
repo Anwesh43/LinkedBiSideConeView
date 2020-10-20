@@ -42,7 +42,7 @@ fun Canvas.drawConeFillPath(scale : Float, r : Float, paint : Paint) {
     val path : Path = Path()
     path.moveTo(0f, 0f)
     path.lineTo(-r, r)
-    path.arcTo(RectF(-2 * r, -r, 0f, r), deg * 2, deg * 2, false)
+    path.arcTo(RectF(-2 * r, -r, 0f, r), deg, deg * 2, false)
     path.lineTo(0f, 0f)
     clipPath(path)
     drawRect(RectF(-2 * r * scale, -r, 0f, r), paint)
@@ -65,9 +65,15 @@ fun Canvas.drawBiSideCone(scale : Float, w : Float, h : Float, paint : Paint) {
         paint.style = Paint.Style.STROKE
         for (i in 0..1) {
             val sfi : Float = sf.divideScale(i * 2, parts)
-            drawLine(-r * sfi, r * (1f - 2 * i) * sfi, 0f, 0f, paint)
+            drawLine(
+                    -r * sfi * (1 - i) + -r * i,
+                    r * sfi * (1 - i) - r * i,
+                    i * (-r + r * sfi),
+                    (r * sfi - r) * i,
+                    paint
+            )
         }
-        drawArc(RectF(-2 * r, -r, 0f, r), deg * 2, deg * 2 * sf2, false, paint)
+        drawArc(RectF(-2 * r, -r, 0f, r), deg, deg * 2 * sf2, false, paint)
         drawConeFillPath(sf4, r, paint)
         restore()
     }
